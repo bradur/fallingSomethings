@@ -5,7 +5,6 @@ public class NodeChunk
 {
     private int width;
     private int height;
-    //public Node[,] Pixels;
     private NodeArray Pixels;
     Color[] colors;
 
@@ -72,31 +71,33 @@ public class NodeChunk
             node.QueueMove(southNeighbor);
             return true;
         }
-        /*
-                Node swNeighbor = GetNeighbor(node, -1, -1);
-                if (WaterCanPassThrough(swNeighbor))
-                {
-                    node.QueueMove(swNeighbor);
-                    return true;
-                }
-                Node seNeighbor = GetNeighbor(node, -1, 1);
-                if (WaterCanPassThrough(seNeighbor))
-                {
-                    node.QueueMove(seNeighbor);
-                    return true;
-                }*/
-        Node westNeighbor = GetNeighbor(node, 0, -1);
-        if (WaterCanPassThrough(westNeighbor))
+        int firstDir = node.FlowDirection;
+        Node firstSouthNeighbor = GetNeighbor(node, -1, firstDir);
+        if (WaterCanPassThrough(firstSouthNeighbor))
         {
-            node.QueueMove(westNeighbor);
+            node.QueueMove(firstSouthNeighbor);
             return true;
         }
-        Node eastNeighbor = GetNeighbor(node, 0, 1);
-        if (WaterCanPassThrough(eastNeighbor))
+        int secondDir = firstDir * -1;
+        Node secondSouthNeighbor = GetNeighbor(node, -1, secondDir);
+        if (WaterCanPassThrough(secondSouthNeighbor))
         {
-            node.QueueMove(eastNeighbor);
+            node.QueueMove(secondSouthNeighbor);
             return true;
         }
+        Node firstHorizontalNeighbor = GetNeighbor(node, 0, firstDir);
+        if (WaterCanPassThrough(firstHorizontalNeighbor))
+        {
+            node.QueueMove(firstHorizontalNeighbor);
+            return true;
+        }
+        node.ChangeDirection();
+        /*Node secondHorizontalNeighbor = GetNeighbor(node, 0, secondDir);
+        if (WaterCanPassThrough(secondHorizontalNeighbor))
+        {
+            node.QueueMove(secondHorizontalNeighbor);
+            return true;
+        }*/
         return false;
     }
 
@@ -128,7 +129,7 @@ public class NodeChunk
     private bool WaterCanPassThrough(Node node)
     {
         return node != null && !node.IsQueueTarget && (
-            node.IsEmpty() || (node.NextX != -1 && node.NextY != -1)
+            node.IsEmpty()
         );
     }
 

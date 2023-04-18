@@ -33,13 +33,6 @@ public class NodeArray : IEnumerable<Node>
 
     public IEnumerator<Node> GetEnumerator()
     {
-        for (int x = 0; x < width; x += 1)
-        {
-            for (int y = 0; y < height; y += 1)
-            {
-                yield return array[y, x];
-            }
-        }
         /*
         for (int x = 0; x < width; x += 1)
         {
@@ -49,6 +42,14 @@ public class NodeArray : IEnumerable<Node>
             }
         }
         */
+        for (int x = 0; x < width; x += 1)
+        {
+            for (int y = 0; y < height; y += 1)
+            {
+                yield return array[y, x];
+            }
+        }
+
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -71,7 +72,21 @@ public class NodeArray : IEnumerable<Node>
 
     public void MoveToNext(Node node)
     {
-        array[node.Y, node.X] = Node.NewNode(node.X, node.Y, NodeType.Empty);
+        Node oldNode = array[node.NextY, node.NextX];
+        if (node.Type == NodeType.Sand && oldNode.Type == NodeType.Water)
+        {
+            oldNode.NextX = -1;
+            oldNode.NextY = -1;
+            oldNode.X = node.X;
+            oldNode.Y = node.Y;
+            oldNode.IsQueueTarget = false;
+            array[node.Y, node.X] = oldNode;
+        }
+        else
+        {
+            array[node.Y, node.X] = Node.NewNode(node.X, node.Y, NodeType.Empty);
+        }
+        node.IsQueueTarget = false;
         array[node.NextY, node.NextX] = node;
         node.X = node.NextX;
         node.Y = node.NextY;

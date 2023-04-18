@@ -20,31 +20,13 @@ public class GameManager : MonoBehaviour
     private List<UIBrushColor> uIBrushColors = new List<UIBrushColor>();
 
     [SerializeField]
-    private List<Color> sandColors = new List<Color>(){
-        new Color(0, 1.0f, 1),
-        new Color(0, 0.9f, 1),
-        new Color(0, 0.8f, 1),
-        new Color(0, 0.7f, 1),
-        new Color(0, 0.6f, 1),
-    };
+    private List<Color> sandColors = new List<Color>();
 
     [SerializeField]
-    private List<Color> woodColors = new List<Color>(){
-        new Color(0, 1.0f, 1),
-        new Color(0, 0.9f, 1),
-        new Color(0, 0.8f, 1),
-        new Color(0, 0.7f, 1),
-        new Color(0, 0.6f, 1),
-    };
+    private List<Color> woodColors = new List<Color>();
 
     [SerializeField]
-    private List<Color> waterColors = new List<Color>(){
-        new Color(0, 1.0f, 1),
-        new Color(0, 0.9f, 1),
-        new Color(0, 0.8f, 1),
-        new Color(0, 0.7f, 1),
-        new Color(0, 0.6f, 1),
-    };
+    private List<Color> waterColors = new List<Color>();
 
     public Color RandomBrushColor(NodeType nodeType)
     {
