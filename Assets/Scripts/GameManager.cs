@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<Color> waterColors = new List<Color>();
 
+    [SerializeField]
+    private List<Color> fireColors = new List<Color>();
+
     public Color RandomBrushColor(NodeType nodeType)
     {
         if (nodeType == NodeType.Sand)
@@ -41,6 +44,10 @@ public class GameManager : MonoBehaviour
         if (nodeType == NodeType.Wood)
         {
             return woodColors[UnityEngine.Random.Range(0, woodColors.Count)];
+        }
+        if (nodeType == NodeType.Fire)
+        {
+            return fireColors[UnityEngine.Random.Range(0, fireColors.Count)];
         }
         return Color.clear;
     }
@@ -58,6 +65,10 @@ public class GameManager : MonoBehaviour
         if (nodeType == NodeType.Wood)
         {
             return woodColors[0];
+        }
+        if (nodeType == NodeType.Fire)
+        {
+            return fireColors[0];
         }
         return Color.clear;
     }
@@ -103,12 +114,6 @@ public class GameManager : MonoBehaviour
         textureDrawer.SetOptions(menu.Options);
     }
 
-    /*
-        public void SelectBrush(NodeType nodeType)
-        {
-            textureDrawer.ChangeType(nodeType);
-        }
-    */
     public void SelectBrush(NodeType nodeType)
     {
         foreach (UIBrushColor brushColor in uIBrushColors)

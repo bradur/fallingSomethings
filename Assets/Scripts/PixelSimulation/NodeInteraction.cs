@@ -10,6 +10,10 @@ public static class NodeInteraction
         {
             return CalculateInteractionForWater(node, chunk);
         }
+        else if (node.Type == NodeType.Fire)
+        {
+            return CalculateInteractionForFire(node, chunk);
+        }
         return false;
     }
 
@@ -68,6 +72,17 @@ public static class NodeInteraction
         return false;
     }
 
+    private static bool CalculateInteractionForFire(Node node, NodeChunk chunk)
+    {
+        Node southNeighbor = chunk.GetNeighbor(node, -1, 0);
+        if (FireCanPassThrough(southNeighbor))
+        {
+            node.QueueMove(southNeighbor);
+            return true;
+        }
+        return false;
+    }
+
     private static bool WaterCanPassThrough(Node node)
     {
         return node != null && !node.IsQueueTarget && (
@@ -78,5 +93,10 @@ public static class NodeInteraction
     private static bool SandCanPassThrough(Node node)
     {
         return node != null && (node.IsEmpty() || node.IsWater());
+    }
+
+    private static bool FireCanPassThrough(Node node)
+    {
+        return node != null;
     }
 }

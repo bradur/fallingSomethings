@@ -328,7 +328,7 @@ MonoBehaviour:
   imgBackground: {fileID: 5067847202251843325}
   txtHotkey: {fileID: 5067847202130821387}
   txtBrushName: {fileID: 5067847203600350592}
-  isSelected: 1
+  isSelected: 0
 --- !u!114 &6510772862773946503
 MonoBehaviour:
   m_ObjectHideFlags: 0

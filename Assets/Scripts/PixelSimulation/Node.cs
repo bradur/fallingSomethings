@@ -69,6 +69,10 @@ public class Node
         {
             return Wood(x, y);
         }
+        else if (nodeType == NodeType.Fire)
+        {
+            return Fire(x, y);
+        }
         return null;
     }
 
@@ -84,10 +88,13 @@ public class Node
     {
         return new Node(x, y, GameManager.main.RandomBrushColor(NodeType.Water), NodeType.Water);
     }
-
     private static Node Wood(int x, int y)
     {
         return new Node(x, y, GameManager.main.RandomBrushColor(NodeType.Wood), NodeType.Wood);
+    }
+    private static Node Fire(int x, int y)
+    {
+        return new Node(x, y, GameManager.main.RandomBrushColor(NodeType.Fire), NodeType.Fire);
     }
 }
 
@@ -96,5 +103,6 @@ public enum NodeType
     Empty,
     Sand,
     Water,
-    Wood
+    Wood,
+    Fire
 }
