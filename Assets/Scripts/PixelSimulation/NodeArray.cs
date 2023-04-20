@@ -71,26 +71,7 @@ public class NodeArray : IEnumerable<Node>
 
     public void MoveToNext(Node node)
     {
-        Node oldNode = array[node.NextY, node.NextX];
-        if (node.Type == NodeType.Sand && oldNode.Type == NodeType.Water)
-        {
-            oldNode.NextX = -1;
-            oldNode.NextY = -1;
-            oldNode.X = node.X;
-            oldNode.Y = node.Y;
-            oldNode.IsQueueTarget = false;
-            array[node.Y, node.X] = oldNode;
-        }
-        else
-        {
-            array[node.Y, node.X] = Node.NewNode(node.X, node.Y);
-        }
-        node.IsQueueTarget = false;
-        array[node.NextY, node.NextX] = node;
-        node.X = node.NextX;
-        node.Y = node.NextY;
-        node.NextX = -1;
-        node.NextY = -1;
+        NodeInteraction.PerformMove(this, node);
     }
 
     public Node Get(int x, int y)

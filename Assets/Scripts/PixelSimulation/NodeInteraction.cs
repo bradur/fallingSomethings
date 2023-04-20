@@ -1,5 +1,29 @@
 public static class NodeInteraction
 {
+    public static void PerformMove(NodeArray array, Node node)
+    {
+        Node oldNode = array.Get(node.NextX, node.NextY);
+        if (node.Type == NodeType.Sand && oldNode.Type == NodeType.Water)
+        {
+            oldNode.NextX = -1;
+            oldNode.NextY = -1;
+            oldNode.X = node.X;
+            oldNode.Y = node.Y;
+            oldNode.IsQueueTarget = false;
+            array.Set(node.X, node.Y, oldNode);
+        }
+        else
+        {
+            array.Set(node.X, node.Y, Node.NewNode(node.X, node.Y));
+        }
+        node.IsQueueTarget = false;
+        array.Set(node.NextX, node.NextY, node);
+        node.X = node.NextX;
+        node.Y = node.NextY;
+        node.NextX = -1;
+        node.NextY = -1;
+    }
+
     public static bool Determine(Node node, NodeChunk chunk)
     {
         if (node.Type == NodeType.Sand)
@@ -95,6 +119,6 @@ public static class NodeInteraction
 
     private static bool FireCanPassThrough(Node node)
     {
-        return node != null;
+        return node != null && !node.IsQueueTarget && node.IsEmpty();
     }
 }
