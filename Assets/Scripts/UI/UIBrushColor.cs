@@ -6,14 +6,6 @@ using TMPro;
 
 public class UIBrushColor : MonoBehaviour
 {
-    [SerializeField]
-    private KeyCode hotkey;
-    public KeyCode Hotkey { get { return hotkey; } }
-    [SerializeField]
-    private string brushName;
-    [SerializeField]
-    private NodeType nodeType;
-    public NodeType NodeType { get { return nodeType; } }
 
     [SerializeField]
     private Color borderColor;
@@ -27,24 +19,21 @@ public class UIBrushColor : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI txtBrushName;
 
-    [SerializeField]
     private bool isSelected = false;
 
     private Color originalBorderColor;
-    private Color originalBgColor;
 
-    void Start()
-    {
-        Initialize();
-    }
+    private BrushConfig config;
 
-    public void Initialize()
+    public NodeType Type { get { return config.Type; } }
+
+    public void Initialize(BrushConfig brushConfig)
     {
+        config = brushConfig;
         originalBorderColor = imgBorder.color;
-        originalBgColor = imgBackground.color;
-        imgBackground.color = GameManager.main.BrushColor(nodeType);
-        txtHotkey.text = KeyCodeToString(hotkey);
-        txtBrushName.text = $"{brushName}";
+        imgBackground.color = brushConfig.BrushColor();
+        txtHotkey.text = KeyCodeToString(brushConfig.Hotkey);
+        txtBrushName.text = $"{brushConfig.BrushName}";
         if (isSelected)
         {
             Select();
@@ -82,7 +71,19 @@ public class UIBrushColor : MonoBehaviour
 
     public void SelectOrDeselect(KeyCode key)
     {
-        if (key == hotkey)
+        if (key == config.Hotkey)
+        {
+            Select();
+        }
+        else
+        {
+            Deselect();
+        }
+    }
+
+    public void SelectOrDeselect(NodeType nodeType)
+    {
+        if (nodeType == config.Type)
         {
             Select();
         }
@@ -94,22 +95,19 @@ public class UIBrushColor : MonoBehaviour
 
     public void Click()
     {
-        GameManager.main.SelectBrush(nodeType);
+        GameManager.main.SelectBrush(config);
     }
 
     public void Select()
     {
         isSelected = true;
         imgBorder.color = borderColor;
-        //imgBackground.color = bgColor;
-        //GameManager.main.SelectBrush(nodeType);
     }
 
     public void Deselect()
     {
         isSelected = false;
         imgBorder.color = originalBorderColor;
-        //imgBackground.color = originalBgColor;
     }
 
 }

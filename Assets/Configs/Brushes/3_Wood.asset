@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f69133e85b0aa1459cb0481c357b00c, type: 3}
+  m_Name: 3_Wood
+  m_EditorClassIdentifier: 
+  colors:
+  - {r: 0.5019608, g: 0.23921569, b: 0, a: 1}
+  - {r: 0.6431373, g: 0.2509804, b: 0, a: 1}
+  - {r: 0.5019608, g: 0.1254902, b: 0, a: 1}
+  - {r: 0.5019608, g: 0.2509804, b: 0.1254902, a: 1}
+  brushName: wood
+  nodeType: 3
+  hotkey: 51

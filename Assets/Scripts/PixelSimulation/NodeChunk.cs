@@ -51,11 +51,11 @@ public class NodeChunk
     }
 
 
-    public NodeChunk(int nodeWidth, int nodeHeight, NodeType nodeType)
+    public NodeChunk(int nodeWidth, int nodeHeight, BrushConfig config = null)
     {
         width = nodeWidth;
         height = nodeHeight;
         colors = new Color[width * height];
-        Pixels = new NodeArray(width, height, nodeType);
+        Pixels = new NodeArray(width, height, config);
     }
 }

@@ -9,7 +9,7 @@ public class NodeArray : IEnumerable<Node>
     private int width;
     private int height;
     private Node[,] array;
-    public NodeArray(int nWidth, int nHeight, NodeType nodeType)
+    public NodeArray(int nWidth, int nHeight, BrushConfig config = null)
     {
         width = nWidth;
         height = nHeight;
@@ -18,14 +18,14 @@ public class NodeArray : IEnumerable<Node>
         {
             for (int x = 0; x < width; x += 1)
             {
-                if (nodeType != NodeType.Empty)
+                if (config != null)
                 {
                     bool isEmpty = UnityEngine.Random.Range(0f, 1f) > 0.5f;
-                    array[y, x] = isEmpty ? Node.NewNode(x, y, NodeType.Empty) : Node.NewNode(x, y, nodeType);
+                    array[y, x] = isEmpty ? Node.NewNode(x, y) : Node.NewNode(x, y, config);
                 }
                 else
                 {
-                    array[y, x] = Node.NewNode(x, y, NodeType.Empty);
+                    array[y, x] = Node.NewNode(x, y);
                 }
             }
         }
@@ -84,7 +84,7 @@ public class NodeArray : IEnumerable<Node>
         }
         else
         {
-            array[node.Y, node.X] = Node.NewNode(node.X, node.Y, NodeType.Empty);
+            array[node.Y, node.X] = Node.NewNode(node.X, node.Y);
         }
         node.IsQueueTarget = false;
         array[node.NextY, node.NextX] = node;

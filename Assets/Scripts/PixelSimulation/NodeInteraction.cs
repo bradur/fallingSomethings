@@ -85,9 +85,7 @@ public static class NodeInteraction
 
     private static bool WaterCanPassThrough(Node node)
     {
-        return node != null && !node.IsQueueTarget && (
-            node.IsEmpty()
-        );
+        return node != null && !node.IsQueueTarget && node.IsEmpty();
     }
 
     private static bool SandCanPassThrough(Node node)

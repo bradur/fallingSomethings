@@ -51,50 +51,18 @@ public class Node
         return Type == NodeType.Water;
     }
 
-    public static Node NewNode(int x, int y, NodeType nodeType)
+    public static Node NewNode(int x, int y, BrushConfig config = null)
     {
-        if (nodeType == NodeType.Sand)
+        if (config != null)
         {
-            return Sand(x, y);
+            return new Node(x, y, config.RandomBrushColor(), config.Type);
         }
-        else if (nodeType == NodeType.Empty)
-        {
-            return Empty(x, y);
-        }
-        else if (nodeType == NodeType.Water)
-        {
-            return Water(x, y);
-        }
-        else if (nodeType == NodeType.Wood)
-        {
-            return Wood(x, y);
-        }
-        else if (nodeType == NodeType.Fire)
-        {
-            return Fire(x, y);
-        }
-        return null;
-    }
-
-    private static Node Sand(int x, int y)
-    {
-        return new Node(x, y, GameManager.main.RandomBrushColor(NodeType.Sand), NodeType.Sand);
-    }
-    private static Node Empty(int x, int y)
-    {
         return new Node(x, y, Color.clear, NodeType.Empty);
     }
-    private static Node Water(int x, int y)
+
+    public override string ToString()
     {
-        return new Node(x, y, GameManager.main.RandomBrushColor(NodeType.Water), NodeType.Water);
-    }
-    private static Node Wood(int x, int y)
-    {
-        return new Node(x, y, GameManager.main.RandomBrushColor(NodeType.Wood), NodeType.Wood);
-    }
-    private static Node Fire(int x, int y)
-    {
-        return new Node(x, y, GameManager.main.RandomBrushColor(NodeType.Fire), NodeType.Fire);
+        return $"[X: {X}][Y: {Y}] & [NextX: {NextX}][NextY: {NextY}]\n[Type: {Type}]\n[IsQueueTarget: {IsQueueTarget}]\n[HorizontalFlowDirection: {HorizontalFlowDirection}]\n[FlowDirection: {FlowDirection}]";
     }
 }
 

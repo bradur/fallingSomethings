@@ -17,7 +17,7 @@ public class TextureDrawer : MonoBehaviour
     private int width = 64;
 
     private int height = 36;
-    private List<NodeChunk> chunks;
+    private List<NodeChunk> chunks = new List<NodeChunk>();
 
     private Texture2D texture;
     private float timer = 0f;
@@ -25,10 +25,12 @@ public class TextureDrawer : MonoBehaviour
 
     private int drawRadius = 1;
 
-    private NodeType brushType = NodeType.Sand;
+    private BrushConfig brushConfig;
 
     [SerializeField]
     private LayerMask drawLayer;
+
+    private bool paused = false;
 
     void Start()
     {
@@ -64,7 +66,7 @@ public class TextureDrawer : MonoBehaviour
     public void InitializeAndFill()
     {
         chunks = new List<NodeChunk>();
-        NodeChunk chunk = new NodeChunk(width, height, brushType);
+        NodeChunk chunk = new NodeChunk(width, height, brushConfig);
         chunk.Render(texture);
         chunks.Add(chunk);
     }
@@ -72,7 +74,7 @@ public class TextureDrawer : MonoBehaviour
     public void Reset()
     {
         chunks = new List<NodeChunk>();
-        NodeChunk chunk = new NodeChunk(width, height, NodeType.Empty);
+        NodeChunk chunk = new NodeChunk(width, height);
         chunk.Render(texture);
         chunks.Add(chunk);
     }
@@ -96,18 +98,17 @@ public class TextureDrawer : MonoBehaviour
         }
     }
 
-    public void ChangeType(NodeType type)
+    public void ChangeType(BrushConfig config)
     {
-        brushType = type;
+        brushConfig = config;
     }
 
 
-    private void DrawCircle(Node startNode, int radius, NodeType nodeType)
+    private void DrawCircle(Node startNode, int radius, BrushConfig config = null)
     {
-        bool eraser = nodeType == NodeType.Empty;
         if (radius == 1)
         {
-            chunks[0].SetNode(startNode.X, startNode.Y, Node.NewNode(startNode.X, startNode.Y, nodeType));
+            chunks[0].SetNode(startNode.X, startNode.Y, Node.NewNode(startNode.X, startNode.Y, config));
             return;
         }
         for (int x = -radius; x <= radius; x += 1)
@@ -122,18 +123,18 @@ public class TextureDrawer : MonoBehaviour
                     continue;
                 }
                 Node node = chunks[0].GetNode(xPos, yPos);
-                if (eraser)
+                if (config == null)
                 {
                     if (node != null && !node.IsEmpty())
                     {
-                        chunks[0].SetNode(xPos, yPos, Node.NewNode(xPos, yPos, nodeType));
+                        chunks[0].SetNode(xPos, yPos, Node.NewNode(xPos, yPos, config));
                     }
                 }
                 else
                 {
                     if (node != null && node.IsEmpty())
                     {
-                        chunks[0].SetNode(xPos, yPos, Node.NewNode(xPos, yPos, nodeType));
+                        chunks[0].SetNode(xPos, yPos, Node.NewNode(xPos, yPos, config));
                     }
                 }
             }
@@ -148,6 +149,10 @@ public class TextureDrawer : MonoBehaviour
         }
         ProcessHotkeys();
         ProcessMouseInput();
+        if (paused)
+        {
+            return;
+        }
         timer += Time.deltaTime;
         interval = 1.0f / fps;
         if (timer > interval)
@@ -158,8 +163,17 @@ public class TextureDrawer : MonoBehaviour
         }
     }
 
+    private void TogglePause()
+    {
+        paused = !paused;
+    }
+
     private void ProcessHotkeys()
     {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            TogglePause();
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             InitializeAndFill();
@@ -174,12 +188,19 @@ public class TextureDrawer : MonoBehaviour
     {
         bool leftMouseButtonWasClicked = Input.GetMouseButton(0);
         bool rightMouseButtonWasClicked = Input.GetMouseButton(1);
+        bool thirdMouseButtonWasClicked = Input.GetMouseButton(3);
 
-        if (!leftMouseButtonWasClicked && !rightMouseButtonWasClicked)
+        if (!leftMouseButtonWasClicked && !rightMouseButtonWasClicked && !thirdMouseButtonWasClicked)
         {
             return;
         }
 
+        if (thirdMouseButtonWasClicked)
+        {
+            Vector2Int nodePos = GetNodeAtMousePosition();
+            Node node = chunks[0].GetNode(nodePos.x, nodePos.y);
+            Debug.Log(node);
+        }
         // if over UI 
         bool isOver = EventSystem.current.IsPointerOverGameObject();
         if (isOver)
@@ -192,7 +213,7 @@ public class TextureDrawer : MonoBehaviour
             Node node = chunks[0].GetNode(nodePos.x, nodePos.y);
             if (node != null)
             {
-                DrawCircle(node, drawRadius, brushType);
+                DrawCircle(node, drawRadius, brushConfig);
             }
         }
         if (rightMouseButtonWasClicked)
@@ -201,7 +222,7 @@ public class TextureDrawer : MonoBehaviour
             Node node = chunks[0].GetNode(nodePos.x, nodePos.y);
             if (node != null)
             {
-                DrawCircle(node, drawRadius, NodeType.Empty);
+                DrawCircle(node, drawRadius);
             }
         }
     }

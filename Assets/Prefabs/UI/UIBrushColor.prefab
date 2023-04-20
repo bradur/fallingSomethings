@@ -320,15 +320,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c374dee7850fb4d88901df1397cdbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hotkey: 49
-  brushName: sand
-  nodeType: 1
-  borderColor: {r: 0, g: 1, b: 1, a: 1}
+  borderColor: {r: 1, g: 1, b: 1, a: 1}
   imgBorder: {fileID: 5067847202809640090}
   imgBackground: {fileID: 5067847202251843325}
   txtHotkey: {fileID: 5067847202130821387}
   txtBrushName: {fileID: 5067847203600350592}
-  isSelected: 0
 --- !u!114 &6510772862773946503
 MonoBehaviour:
   m_ObjectHideFlags: 0

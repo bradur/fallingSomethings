@@ -17,60 +17,12 @@ public class GameManager : MonoBehaviour
     private TextureDrawer textureDrawer;
 
     [SerializeField]
-    private List<UIBrushColor> uIBrushColors = new List<UIBrushColor>();
+    private BrushManager brushManager;
 
-    [SerializeField]
-    private List<Color> sandColors = new List<Color>();
 
-    [SerializeField]
-    private List<Color> woodColors = new List<Color>();
-
-    [SerializeField]
-    private List<Color> waterColors = new List<Color>();
-
-    [SerializeField]
-    private List<Color> fireColors = new List<Color>();
-
-    public Color RandomBrushColor(NodeType nodeType)
+    void Start()
     {
-        if (nodeType == NodeType.Sand)
-        {
-            return sandColors[UnityEngine.Random.Range(0, sandColors.Count)];
-        }
-        if (nodeType == NodeType.Water)
-        {
-            return waterColors[UnityEngine.Random.Range(0, waterColors.Count)];
-        }
-        if (nodeType == NodeType.Wood)
-        {
-            return woodColors[UnityEngine.Random.Range(0, woodColors.Count)];
-        }
-        if (nodeType == NodeType.Fire)
-        {
-            return fireColors[UnityEngine.Random.Range(0, fireColors.Count)];
-        }
-        return Color.clear;
-    }
-
-    public Color BrushColor(NodeType nodeType)
-    {
-        if (nodeType == NodeType.Sand)
-        {
-            return sandColors[0];
-        }
-        if (nodeType == NodeType.Water)
-        {
-            return waterColors[0];
-        }
-        if (nodeType == NodeType.Wood)
-        {
-            return woodColors[0];
-        }
-        if (nodeType == NodeType.Fire)
-        {
-            return fireColors[0];
-        }
-        return Color.clear;
+        brushManager.Initialize(textureDrawer);
     }
 
     private bool menuOpen = false;
@@ -114,20 +66,9 @@ public class GameManager : MonoBehaviour
         textureDrawer.SetOptions(menu.Options);
     }
 
-    public void SelectBrush(NodeType nodeType)
+    public void SelectBrush(BrushConfig config)
     {
-        foreach (UIBrushColor brushColor in uIBrushColors)
-        {
-            if (brushColor.NodeType == nodeType)
-            {
-                brushColor.Select();
-            }
-            else
-            {
-                brushColor.Deselect();
-            }
-        }
-        textureDrawer.ChangeType(nodeType);
+        brushManager.SelectBrush(config);
     }
 
     void Update()
@@ -141,14 +82,6 @@ public class GameManager : MonoBehaviour
             else
             {
                 OpenOptions();
-            }
-        }
-        foreach (UIBrushColor uIBrushColor in uIBrushColors)
-        {
-            if (Input.GetKeyDown(uIBrushColor.Hotkey))
-            {
-                SelectBrush(uIBrushColor.NodeType);
-                break;
             }
         }
     }
