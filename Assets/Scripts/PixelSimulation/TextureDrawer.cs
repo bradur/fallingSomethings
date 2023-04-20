@@ -62,6 +62,11 @@ public class TextureDrawer : MonoBehaviour
         renderedObject.transform.localScale = scale;
     }
 
+    public void TogglePause()
+    {
+        paused = !paused;
+    }
+
     public void InitializeAndFill()
     {
         chunks = new List<NodeChunk>();
@@ -160,11 +165,6 @@ public class TextureDrawer : MonoBehaviour
             Draw();
             timer = 0f;
         }
-    }
-
-    private void TogglePause()
-    {
-        paused = !paused;
     }
 
     private void ProcessHotkeys()

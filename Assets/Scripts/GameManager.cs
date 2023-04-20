@@ -32,7 +32,10 @@ public class GameManager : MonoBehaviour
         menu.Show();
     }
 
-
+    public void TogglePause()
+    {
+        textureDrawer.TogglePause();
+    }
     public void InitializeAndFill()
     {
         textureDrawer.InitializeAndFill();

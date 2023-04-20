@@ -48,6 +48,9 @@ public class UIActionButton : MonoBehaviour
             case UIAction.ClearAndFill:
                 GameManager.main.InitializeAndFill();
                 break;
+            case UIAction.TogglePause:
+                GameManager.main.TogglePause();
+                break;
             default:
                 break;
         }
@@ -59,5 +62,6 @@ public enum UIAction
 {
     Clear,
     ClearAndFill,
-    Options
+    Options,
+    TogglePause
 }
