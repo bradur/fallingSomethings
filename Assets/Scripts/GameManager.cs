@@ -32,15 +32,15 @@ public class GameManager : MonoBehaviour
     {
         if (nodeType == NodeType.Sand)
         {
-            return sandColors[UnityEngine.Random.Range(0, sandColors.Count - 1)];
+            return sandColors[UnityEngine.Random.Range(0, sandColors.Count)];
         }
         if (nodeType == NodeType.Water)
         {
-            return waterColors[UnityEngine.Random.Range(0, waterColors.Count - 1)];
+            return waterColors[UnityEngine.Random.Range(0, waterColors.Count)];
         }
         if (nodeType == NodeType.Wood)
         {
-            return woodColors[UnityEngine.Random.Range(0, woodColors.Count - 1)];
+            return woodColors[UnityEngine.Random.Range(0, woodColors.Count)];
         }
         return Color.clear;
     }
@@ -71,6 +71,15 @@ public class GameManager : MonoBehaviour
         menu.Show();
     }
 
+
+    public void InitializeAndFill()
+    {
+        textureDrawer.InitializeAndFill();
+    }
+    public void Reset()
+    {
+        textureDrawer.Reset();
+    }
 
     public int RandomChoice(int value1, int value2)
     {

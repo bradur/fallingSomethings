@@ -10,6 +10,7 @@ public class Node
     public int Y;
     public NodeType Type;
     public bool IsQueueTarget = false;
+    public int HorizontalFlowDirection = -1;
     public int FlowDirection = -1;
 
     public Node(int x, int y, Color nodeColor, NodeType nodeType)
@@ -20,12 +21,17 @@ public class Node
         Y = y;
         Color = nodeColor;
         Type = nodeType;
+        HorizontalFlowDirection = GameManager.main.RandomChoice(-1, 1);
         FlowDirection = GameManager.main.RandomChoice(-1, 1);
     }
 
     public void ChangeDirection()
     {
         FlowDirection *= -1;
+    }
+    public void ChangeHorizontalDirection()
+    {
+        HorizontalFlowDirection *= -1;
     }
 
     public void QueueMove(Node node)

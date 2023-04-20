@@ -61,7 +61,7 @@ public class TextureDrawer : MonoBehaviour
         renderedObject.transform.localScale = scale;
     }
 
-    void InitializeAndFill()
+    public void InitializeAndFill()
     {
         chunks = new List<NodeChunk>();
         NodeChunk chunk = new NodeChunk(width, height, brushType);
@@ -69,7 +69,7 @@ public class TextureDrawer : MonoBehaviour
         chunks.Add(chunk);
     }
 
-    void Reset()
+    public void Reset()
     {
         chunks = new List<NodeChunk>();
         NodeChunk chunk = new NodeChunk(width, height, NodeType.Empty);

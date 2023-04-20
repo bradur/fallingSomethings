@@ -71,27 +71,31 @@ public class NodeChunk
             node.QueueMove(southNeighbor);
             return true;
         }
-        int firstDir = node.FlowDirection;
-        Node firstSouthNeighbor = GetNeighbor(node, -1, firstDir);
-        if (WaterCanPassThrough(firstSouthNeighbor))
+
+        int diagonalDir = node.FlowDirection;
+        Node diagonalNeighbor = GetNeighbor(node, -1, diagonalDir);
+        if (WaterCanPassThrough(diagonalNeighbor))
         {
-            node.QueueMove(firstSouthNeighbor);
+            node.QueueMove(diagonalNeighbor);
             return true;
         }
+        node.ChangeDirection();
+        /*
         int secondDir = firstDir * -1;
         Node secondSouthNeighbor = GetNeighbor(node, -1, secondDir);
         if (WaterCanPassThrough(secondSouthNeighbor))
         {
             node.QueueMove(secondSouthNeighbor);
             return true;
-        }
-        Node firstHorizontalNeighbor = GetNeighbor(node, 0, firstDir);
-        if (WaterCanPassThrough(firstHorizontalNeighbor))
+        }*/
+        int horizDirection = node.HorizontalFlowDirection;
+        Node horizontalNeighbor = GetNeighbor(node, 0, horizDirection);
+        if (WaterCanPassThrough(horizontalNeighbor))
         {
-            node.QueueMove(firstHorizontalNeighbor);
+            node.QueueMove(horizontalNeighbor);
             return true;
         }
-        node.ChangeDirection();
+        node.ChangeHorizontalDirection();
         /*Node secondHorizontalNeighbor = GetNeighbor(node, 0, secondDir);
         if (WaterCanPassThrough(secondHorizontalNeighbor))
         {
