@@ -30,6 +30,7 @@ public class TextureDrawer : MonoBehaviour
     private LayerMask drawLayer;
 
     private bool paused = false;
+    private bool eraser = false;
 
     void Start()
     {
@@ -65,6 +66,10 @@ public class TextureDrawer : MonoBehaviour
     public void TogglePause()
     {
         paused = !paused;
+    }
+    public void ToggleEraser()
+    {
+        eraser = !eraser;
     }
 
     public void InitializeAndFill()
@@ -106,7 +111,6 @@ public class TextureDrawer : MonoBehaviour
     {
         brushConfig = config;
     }
-
 
     private void DrawCircle(Node startNode, int radius, BrushConfig config = null)
     {
@@ -181,18 +185,27 @@ public class TextureDrawer : MonoBehaviour
         {
             Reset();
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleEraser();
+        }
     }
 
     private void ProcessMouseInput()
     {
+
         bool leftMouseButtonWasClicked = Input.GetMouseButton(0);
         bool rightMouseButtonWasClicked = Input.GetMouseButton(1);
         bool thirdMouseButtonWasClicked = Input.GetMouseButton(3);
+
 
         if (!leftMouseButtonWasClicked && !rightMouseButtonWasClicked && !thirdMouseButtonWasClicked)
         {
             return;
         }
+
+        bool drawButtonWasClicked = eraser ? rightMouseButtonWasClicked : leftMouseButtonWasClicked;
+        bool eraseButtonWasClicked = eraser ? leftMouseButtonWasClicked : rightMouseButtonWasClicked;
 
         if (thirdMouseButtonWasClicked)
         {
@@ -206,7 +219,7 @@ public class TextureDrawer : MonoBehaviour
         {
             return;
         }
-        if (leftMouseButtonWasClicked)
+        if (drawButtonWasClicked)
         {
             Vector2Int nodePos = GetNodeAtMousePosition();
             Node node = chunks[0].GetNode(nodePos.x, nodePos.y);
@@ -215,7 +228,7 @@ public class TextureDrawer : MonoBehaviour
                 DrawCircle(node, drawRadius, brushConfig);
             }
         }
-        if (rightMouseButtonWasClicked)
+        if (eraseButtonWasClicked)
         {
             Vector2Int nodePos = GetNodeAtMousePosition();
             Node node = chunks[0].GetNode(nodePos.x, nodePos.y);

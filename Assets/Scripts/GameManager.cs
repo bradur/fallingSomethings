@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
     {
         textureDrawer.TogglePause();
     }
+    public void ToggleEraser()
+    {
+        textureDrawer.ToggleEraser();
+    }
     public void InitializeAndFill()
     {
         textureDrawer.InitializeAndFill();

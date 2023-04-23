@@ -51,6 +51,9 @@ public class UIActionButton : MonoBehaviour
             case UIAction.TogglePause:
                 GameManager.main.TogglePause();
                 break;
+            case UIAction.ToggleEraser:
+                GameManager.main.ToggleEraser();
+                break;
             default:
                 break;
         }
@@ -63,5 +66,6 @@ public enum UIAction
     Clear,
     ClearAndFill,
     Options,
-    TogglePause
+    TogglePause,
+    ToggleEraser
 }
